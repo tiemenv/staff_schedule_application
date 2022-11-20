@@ -103,7 +103,7 @@ const insert = async ({
   });
 
   // TODO: remove automatic admin role, just for easier testing
-  await user.setRoles([1, 2]);
+  await user.setRoles([1]);
   return user.dataValues;
 };
 

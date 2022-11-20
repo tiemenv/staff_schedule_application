@@ -27,7 +27,7 @@ exports.updateUser = async (req, res) => {
   const { username, password, roles } = req.body;
   const { userId } = req.params;
   const { error } = await UserService.update({
-    userId, username, password, roles
+    userId, username, password, roles,
   });
   if (error) {
     switch (error) {

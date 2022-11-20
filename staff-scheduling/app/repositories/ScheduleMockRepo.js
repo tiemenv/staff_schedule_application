@@ -1,6 +1,7 @@
 /**
- * We can mock the implementation of the MySQL repo here for test purpose
+ * We can mock the implementation of the MySQL repo here for test purposes
  * or we can use an npm module such as sequelize-mock
+ * Skipped for now because of time constraints
  */
 // const db = [
 //   {

@@ -62,6 +62,20 @@ To do anything meaningful, you will first have to create an account, this can be
 
 Note that newly created accounts, by default, only get the `user` role. To change a user's role, admin permissions are required. Currently, one should manually change the role of the first created user to admin in the DB. This should probably be automated in the future.
 
+For easier testing, you can change the line 
+
+```
+  await user.setRoles([1]);
+```
+
+to 
+
+```
+  await user.setRoles([1,2])
+```
+
+to give new account automatic admin
+
 After that, you can login by POSTing the same info to `/auth/login`, which will set a JWT for you which will be used in future authentication.
 
 You can log out at any time by POSTing to `/auth/logout`.
