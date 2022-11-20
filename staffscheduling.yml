@@ -1,0 +1,277 @@
+openapi: 3.1.0
+info:
+  title: Staff Scheduling Application
+  description: |
+    This Application allows for staff members to be scheduled in and for
+    members to view their schedules, admins can also request a list of
+    staff ordered by their amount of scheduled hours
+  version: 1.0.0
+tags:
+  - name: Schedule
+  - name: User
+  - name: Auth
+paths:
+  /users:
+    get:
+      summary: Get a list of users
+      description: Retrieves a list of users ordered by their amount of scheduled hours
+      tags:
+        - User
+      operationId: get-users
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user-list"
+
+  /users/{userId}:
+    parameters:
+      - $ref: "#/components/parameters/userId"
+    put:
+      summary: Update a user
+      description: Updates a single user
+      tags:
+        - User
+      operationId: update-user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user-update"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: The provided parameters are incorrect
+    delete:
+      summary: Delete a user
+      description: Deletes a single user
+      tags:
+        - User
+      operationId: delete-user
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: The provided parameters are incorrect
+
+  /auth/register:
+    post:
+      summary: "Register a user"
+      description: "Creates a new user"
+      tags: 
+        - User
+        - Auth
+      operationId: create-user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/user-create"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: The provided parameters are incorrect
+
+  /auth/login:
+    post:
+      summary: "Log in"
+      description: "Attempts to log in the user with the provided credentials"
+      tags:
+        - User
+        - Auth
+      operationId: login
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/login"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: The provided parameters are incorrect
+
+  /auth/logout:
+    post:
+      summary: "Log out"
+      description: "Logs out the current user"
+      tags:
+        - User
+        - Auth
+      operationId: logout
+      responses:
+        "200":
+          description: "OK"
+
+  /users/{userId}/schedules:
+    parameters:
+      - $ref: "#/components/parameters/userId"
+    get:
+      summary: "Get schedules for a user"
+      description: "Retrieves all schedules for a given user"
+      tags:
+        - Schedule
+        - User
+      operationId: get-schedules
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/schedule-list"
+
+  /schedules:
+    post:
+      summary: "Creates a new schedule"
+      description: "Creates a new schedule for a given user if the timeslot is available"
+      tags:
+        - Schedule
+      operationId: create-schedule
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/schedule-create"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: The provided parameters are incorrect
+
+    /schedules/{scheduleId}:
+      parameters:
+        - $ref: "#/components/parameters/scheduleId"
+      put:
+        summary: "Updates a schedule"
+        description: "Updates a schedule"
+        tags:
+          - Schedule
+        operationId: update-schedule
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/schedule-update"
+        responses:
+          "200":
+            description: "OK"
+          "400":
+            description: The provided parameters are incorrect
+      delete:
+        summary: "Deletes a schedule"
+        description: "Deletes a schedule"
+        tags:
+          - Schedule
+        operationId: delete-schedule
+        responses:
+          "200":
+            description: "OK"
+          "400":
+            description: The provided parameters are incorrect
+
+components:
+  parameters:
+    userId:
+      description: User ID
+      name: userId
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/userId"
+    scheduleId:
+      description: Schedule ID
+      name: scheduleId
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/scheduleId"
+  schemas:
+    userId:
+      type: integer
+      example: 1
+    scheduleId:
+      type: integer
+      example: 1
+    username:
+      type: string
+      example: "johnd"
+    password:
+      type: string
+    role:
+      type: string
+      enum: ["user", "admin"]
+      description: User role, user indicates a normal user, while admin indicates administrator
+      example: "user"
+    roles:
+      type: array
+      items:
+        $ref: "#/components/schemas/role"
+    user-update:
+      type: object
+      properties:
+        username:
+          $ref: "#/components/schemas/username"
+        roles:
+          $ref: "#/components/schemas/roles"
+        password:
+          $ref: "#/components/schemas/password"
+    user-create:
+      type: object
+      properties:
+        username:
+          $ref: "#/components/schemas/username"
+        password:
+          $ref: "#/components/schemas/password"
+    login:
+      type: object
+      properties:
+        username:
+          $ref: "#/components/schemas/username"
+        password:
+          $ref: "#/components/schemas/password" 
+    user-list:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          username:
+            $ref: "#/components/schemas/username"
+          totalHours:
+            type: number
+    schedule:
+      type: object
+      properties:
+        id:
+          type: integer
+        start:
+          type: date
+        end:
+          type: date
+        hours:
+          type: integer
+    schedule-list:
+      type: array
+      items:
+        $ref: "#/components/schemas/schedule"
+    schedule-create:
+      type: object
+      properties:
+        start:
+          type: date
+        hours: 
+          type: number
+        userId:
+          type: number
+
