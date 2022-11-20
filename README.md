@@ -2,6 +2,22 @@
 
 Backend application for a staff scheduling system where you can create staff and admin accounts, and create work schedules for staff members.
 
+## notes
+
+open api document still needs more correct responses
+
+in a real world scenario you would want the repo to catch and normalize the error
+
+could've extracted more things to constants, like roles, error messages
+
+we need a lot more unit test with mock repos
+
+better spend some time on setting up auto-generation of docs with swagger
+
+should investigate DB persistency when container shuts down, look into volumes
+
+probably not every error is being gracefully caught and passed along
+
 ## Running the application
 
 ### Configuriong environment variables
@@ -44,8 +60,7 @@ Or remove all created containers and images with
 
 ### Running without docker
 
-Alternatively, you can run just the node server by running `npm start` from the `staff-scheduling` directory,
-after changing the environment variables to local values.
+Alternatively, install the packages with `npm install` and then you can run just the node server by running `npm start` from the `staff-scheduling` directory, after changing the environment variables to local values.
 
 ## Usage
 
@@ -111,19 +126,3 @@ Alternatively, an admin can request a list of users ordered by amount of schedul
 Both these endpoints accepts optional `searchFrom` and `searchTill` query parameters, which should be timestamps
 
 eg. `/users/1/schedules?searchFrom=1668930775039&searchTill=1669050775039`
-
-## notes
-
-open api document still needs more correct responses
-
-in a real world scenario you would want the repo to catch and normalize the error
-
-could've extracted more things to constants, like roles, error messages
-
-we need a lot more unit test with mock repos
-
-better spend some time on setting up auto-generation of docs with swagger
-
-should investigate DB persistency when container shuts down, look into volumes
-
-probably not every error is being gracefully caught and passed along
