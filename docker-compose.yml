@@ -11,11 +11,15 @@ services:
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    volumes:
-      - db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 40
+
   app:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     build: ./staff-scheduling
     restart: unless-stopped
     env_file: ./.env
@@ -32,5 +36,3 @@ services:
     stdin_open: true
     tty: true
 
-volumes: 
-  db:
