@@ -4,6 +4,26 @@ Backend application for a staff scheduling system where you can create staff and
 
 ## Running the application
 
+### Configuriong environment variables
+
+Create a `.env` file with the following info:
+
+```
+MYSQLDB_USER=<mysql desired user>
+MYSQLDB_ROOT_PASSWORD=<mysql desired password>
+MYSQLDB_DATABASE=<mysql desired db>
+MYSQLDB_LOCAL_PORT=3307
+MYSQLDB_DOCKER_PORT=3306
+
+NODE_LOCAL_PORT=<desired web application port>
+NODE_DOCKER_PORT=3000
+
+AUTH_KEY=<jwt key>
+COOKIE_SECRET=<cookie secret>
+```
+
+### Running the containers
+
 Run the containers by running
 
 ```docker-compose up```
@@ -22,54 +42,70 @@ Or remove all created containers and images with
 
 ```docker-compose down --rmi all```
 
+### Running without docker
+
+Alternatively, you can run just the node server by running `npm start` from the `staff-scheduling` directory,
+after changing the environment variables to local values.
+
 ## Usage
 
-To do anything meaningful, you will first have to create an account
+### Account setup
+
+To do anything meaningful, you will first have to create an account, this can be achieved by POSTing to `/auth/register` with a username and password, eg:
+
+```
+{
+  "username": "tiemenv"
+  "password": "dummyPassword"
+}
+```
+
+Note that newly created accounts, by default, only get the `user` role. To change a user's role, admin permissions are required. Currently, one should manually change the role of the first created user to admin in the DB. This should probably be automated in the future.
+
+After that, you can login by POSTing the same info to `/auth/login`, which will set a JWT for you which will be used in future authentication.
+
+You can log out at any time by POSTing to `/auth/logout`.
+
+### Schedules
+
+With a user account, we can only view schedules.
+
+With an admin account, we can create, edit, delete and view schedules, as well as list users ordered by amount of scheduled hours. Additionaly, we can edit and delete other user accounts as well.
+
+#### Creating a schedule
+
+Creating a schedule can be done by POSTing the relevant information to `/schedules` while logged in with admin permissions. Start date should be posted as a stringified date.
+
+```
+{
+  "start": "2022-12-15T07:43:57.202Z",
+  "hours": 5,
+  "userId": 1,
+}
+```
+
+For editing, you can PUT the same body properties to `/schedules/{scheduleId}`.
+
+For deletion, you can DELETE `/schedules/{scheduleId}`
+
+#### Viewing schedules
+
+Any user can view schedules of any other user, you can so by GET `/users/{userId}/schedules`
+
+Alternatively, an admin can request a list of users ordered by amount of scheduled hours: GET `/users`
+
+Both these endpoints accepts optional `searchFrom` and `searchTill` query parameters, which should be timestamps
+
+eg. `/users/1/schedules?searchFrom=1668930775039&searchTill=1669050775039`
+
 ## notes
 
-TODO:
-
-<!-- user list with counted hours -> "start period" -> "end period" -->
-<!-- time search options -->
-<!-- update schedule -->
-<!-- soft-delete schedule -->
-<!-- reconsider start time and end time data types -->
-<!-- user roles: edit and attach admin roles -->
-<!-- edit/delete users -->
-<!-- validation in routes -->
-<!-- put creds in .env -->
-<!-- unit tests???? -->
-dockerize
-readme + notes
-openAPI documentation -> read through and correct responses
-<!-- github -->
-
-<!-- TEST VALIDATION -->
-
-<!-- DELETE USER -->
-<!-- EDIT USER -->
-
-<!-- fix typedefs? -->
-
-merge 2 similar queries in schedule repo
-
-open api document still needs correct responses
-
-repo does not return the whole Model, needless memory and load, only need data
+open api document still needs more correct responses
 
 in a real world scenario you would want the repo to catch and normalize the error
 
-never let the model exit the repo, just do all operations there and return data
-
 could've extracted more things to constants, like roles, error messages
+
 better spend some time on setting up auto-generation of docs with swagger
 
-ROLE: belongsToMany users
-
-USER: hasMany roles, hasMany schedules
-
-SCHEDULE: belongsTo user
-
-USER one-to-many SCHEDULE
-
-USER many-to-many ROLE
+should investigate DB persistency when container shuts down, look into volumes

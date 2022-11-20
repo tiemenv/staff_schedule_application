@@ -1,3 +1,8 @@
+/**
+ * This is just one unit test to show the concept, but by no means a comprehensive test suite
+ * later, we should add MockRepos as illustrated in ScheduleMockRepo so we can cover more function
+ */
+
 const { addHoursToDate, addYearsToDate, addHoursToTimestamp } = require("./addTimeToDate");
 
 describe("addTimeToDate tests", () => {
