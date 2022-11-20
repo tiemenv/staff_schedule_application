@@ -1,3 +1,32 @@
+# Staff Scheduling Application
+
+Backend application for a staff scheduling system where you can create staff and admin accounts, and create work schedules for staff members.
+
+## Running the application
+
+Run the containers by running
+
+```docker-compose up```
+
+Docker will automatically pull the node and/or MySQL images if your system doesn't have them
+
+Alternatively, you can run the containers in the background by providing the `-d` argument
+
+```docker-compose up -d```
+
+You can stop the containers via
+
+```docker-compose down```
+
+Or remove all created containers and images with
+
+```docker-compose down --rmi all```
+
+## Usage
+
+To do anything meaningful, you will first have to create an account
+## notes
+
 TODO:
 
 <!-- user list with counted hours -> "start period" -> "end period" -->
@@ -24,6 +53,7 @@ openAPI documentation -> read through and correct responses
 
 merge 2 similar queries in schedule repo
 
+open api document still needs correct responses
 
 repo does not return the whole Model, needless memory and load, only need data
 

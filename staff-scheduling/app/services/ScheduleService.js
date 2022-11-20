@@ -43,7 +43,7 @@ const getForUser = async ({ userId, searchFrom, searchTill }) => {
       || isEmpty(searchTill)
       || addYearsToDate({ numberOfYears: 1, date: searchTill }) > searchTill
     ) {
-      // TODO:
+      // TODO: copy variable instead of changing it
       searchTill = addYearsToDate({ numberOfYears: 1, date: new Date() });
     }
     const { schedules } = await _repo.findByUser({ userId, searchFrom, searchTill });

@@ -2,11 +2,11 @@
 const express = require("express");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
-const db = require("./repositories/models");
-const ScheduleService = require("./services/ScheduleService");
-const ScheduleMySqlRepo = require("./repositories/ScheduleMySqlRepo");
-const UserService = require("./services/UserService");
-const UserMySqlRepo = require("./repositories/UserMySqlRepo");
+const db = require("./app/repositories/models");
+const ScheduleService = require("./app/services/ScheduleService");
+const ScheduleMySqlRepo = require("./app/repositories/ScheduleMySqlRepo");
+const UserService = require("./app/services/UserService");
+const UserMySqlRepo = require("./app/repositories/UserMySqlRepo");
 
 require("dotenv").config();
 
@@ -57,9 +57,9 @@ UserService.initService(UserMySqlRepo);
 initializeDb({ reset: false });
 
 // routes
-require("./routes/auth")(app);
-require("./routes/user")(app);
-require("./routes/schedule")(app);
+require("./app/routes/auth")(app);
+require("./app/routes/user")(app);
+require("./app/routes/schedule")(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
