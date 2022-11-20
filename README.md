@@ -9,27 +9,20 @@ TODO:
 <!-- edit/delete users -->
 <!-- validation in routes -->
 <!-- put creds in .env -->
-unit tests????
+<!-- unit tests???? -->
 dockerize
 readme + notes
-openAPI documentation
-github
+openAPI documentation -> read through and correct responses
+<!-- github -->
 
 <!-- TEST VALIDATION -->
 
 <!-- DELETE USER -->
 <!-- EDIT USER -->
 
-fix typedefs?
+<!-- fix typedefs? -->
 
-<!-- handle schedule insert where userId doesn't exist -->
 merge 2 similar queries in schedule repo
-
-<!-- How to handle scheduling logic where user queries are required? -->
-<!-- Figure out why many-to-many relation of Schedules <-> Users not working? -> is it even necessary? -->
-
-<!-- refactor auth to service -> repo -->
-<!-- refactor user to service -> repo -->
 
 
 repo does not return the whole Model, needless memory and load, only need data

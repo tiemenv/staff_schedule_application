@@ -8,6 +8,8 @@ const ScheduleMySqlRepo = require("./repositories/ScheduleMySqlRepo");
 const UserService = require("./services/UserService");
 const UserMySqlRepo = require("./repositories/UserMySqlRepo");
 
+require("dotenv").config();
+
 const app = express();
 
 // use cors middleware
@@ -18,7 +20,7 @@ app.use(express.json());
 
 app.use(cookieSession({
   name: "session",
-  secret: "dummy-secret",
+  secret: process.env.COOKIE_SECRET,
   // prevent access by client-side JS
   httpOnly: true,
 }));

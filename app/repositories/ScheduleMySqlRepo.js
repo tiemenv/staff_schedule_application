@@ -12,7 +12,7 @@ const User = db.user;
  * @param {Date} options.end
  * @param {number} options.userId
  * @param {number} [options.excludeScheduleId]
- * @returns {Promise<Schedule>}
+ * @returns {Promise<>}
  */
 const findBetweenDates = async ({
   start,
@@ -50,7 +50,7 @@ const findBetweenDates = async ({
  * @param {Object} options
  * @param {number} options.scheduleId
  * @param {boolean} [options.raw]
- * @returns {Promise<Schedule>}
+ * @returns {Promise<>}
  */
 const findById = async ({ scheduleId, raw = false }) => {
   const schedule = await Schedule.findByPk(scheduleId, { raw });
@@ -63,7 +63,7 @@ const findById = async ({ scheduleId, raw = false }) => {
  * @param {Date} [searchFrom]
  * @param {Date} [searchTill]
  * @param {number} [excludeScheduleId]
- * @returns {Promise<Array<Schedule>>}
+ * @returns {Promise<>}
  */
 const findByUser = async ({ userId, searchFrom, searchTill }) => {
   const queryObject = {
@@ -98,7 +98,7 @@ const findByUser = async ({ userId, searchFrom, searchTill }) => {
  * @param {Date} options.end
  * @param {number} options.hours
  * @param {number} options.userId
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const insert = async ({
   start,
@@ -131,7 +131,7 @@ const insert = async ({
  * @param {Date} options.end
  * @param {number} options.hours
  * @param {number} options.userId
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const update = async ({
   scheduleId, start, hours, end, userId,
@@ -155,7 +155,7 @@ const update = async ({
  *
  * @param {Object} options
  * @param {number} options.scheduleId
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const remove = async ({ scheduleId }) => {
   const schedule = await findById({ scheduleId });

@@ -4,13 +4,6 @@ const UserService = require("./UserService");
 
 let _repo = null;
 
-// REPO
-/**
- * REPO methods NAME should be ABOUT operation with DBs such as insert, find, delete, ec..
- * REPO methods NAME must NEVER have business logic names, such as isTimeSlotAvailable
- * REPO has JUST database OPS (queries, mutations)
- */
-
 const initService = (scheduleRepository) => {
   _repo = scheduleRepository;
 };
@@ -40,7 +33,7 @@ const isTimeSlotAvailable = async ({
  * @param {number} options.userId
  * @param {Date} [options.searchFrom]
  * @param {Date} [options.searchTill]
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const getForUser = async ({ userId, searchFrom, searchTill }) => {
   try {
@@ -69,9 +62,7 @@ const getForUser = async ({ userId, searchFrom, searchTill }) => {
  * @param {Date} options.start
  * @param {Date} options.end
  * @param {number} options.userId
- * @returns {Object} response
- * @returns {Schedule} [response.schedule]
- * @returns {string} [response.error]
+ * @returns {Promise<>}
  */
 const create = async ({ start, hours, userId }) => {
   const end = addHoursToDate({ numberOfHours: hours, date: start });
@@ -107,12 +98,11 @@ const create = async ({ start, hours, userId }) => {
 /**
  *
  * @param {Object} options
- * @param {Date} options.start
- * @param {Date} options.end
- * @param {number} options.userId
- * @returns {Object} response
- * @returns {Schedule} [response.schedule]
- * @returns {string} [response.error]
+ * @param {Date} [options.start]
+ * @param {number} [options.hours]
+ * @param {number} [options.userId]
+ * @param {number} options.scheduleId
+ * @returns {Promise<>}
  */
 const update = async ({
   start, hours, userId, scheduleId,
@@ -143,7 +133,7 @@ const update = async ({
  *
  * @param {Object} options
  * @param {number} options.scheduleId
- * @returns {Object} response
+ * @returns {Promise<>}
  */
 const remove = async ({ scheduleId }) => {
   // depending on business requirements, we might want to prevent removing past schedules

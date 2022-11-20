@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: Staff Scheduling Application
   description: |
@@ -71,7 +71,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/schemas/user-create"
+              $ref: "#/components/schemas/user-create"
       responses:
         "201":
           description: "Created"
@@ -83,7 +83,6 @@ paths:
       summary: "Log in"
       description: "Attempts to log in the user with the provided credentials"
       tags:
-        - User
         - Auth
       operationId: login
       requestBody: 
@@ -91,7 +90,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/schemas/login"
+              $ref: "#/components/schemas/login"
       responses:
         "200":
           description: "OK"
@@ -103,7 +102,6 @@ paths:
       summary: "Log out"
       description: "Logs out the current user"
       tags:
-        - User
         - Auth
       operationId: logout
       responses:
@@ -117,7 +115,6 @@ paths:
       summary: "Get schedules for a user"
       description: "Retrieves all schedules for a given user"
       tags:
-        - Schedule
         - User
       operationId: get-schedules
       responses:
@@ -147,37 +144,37 @@ paths:
         "400":
           description: The provided parameters are incorrect
 
-    /schedules/{scheduleId}:
-      parameters:
-        - $ref: "#/components/parameters/scheduleId"
-      put:
-        summary: "Updates a schedule"
-        description: "Updates a schedule"
-        tags:
-          - Schedule
-        operationId: update-schedule
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/schedule-update"
-        responses:
-          "200":
-            description: "OK"
-          "400":
-            description: The provided parameters are incorrect
-      delete:
-        summary: "Deletes a schedule"
-        description: "Deletes a schedule"
-        tags:
-          - Schedule
-        operationId: delete-schedule
-        responses:
-          "200":
-            description: "OK"
-          "400":
-            description: The provided parameters are incorrect
+  /schedules/{scheduleId}:
+    parameters:
+      - $ref: "#/components/parameters/scheduleId"
+    put:
+      summary: "Updates a schedule"
+      description: "Updates a schedule"
+      tags:
+        - Schedule
+      operationId: update-schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/schedule-update"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: The provided parameters are incorrect
+    delete:
+      summary: "Deletes a schedule"
+      description: "Deletes a schedule"
+      tags:
+        - Schedule
+      operationId: delete-schedule
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: The provided parameters are incorrect
 
 components:
   parameters:
@@ -256,9 +253,9 @@ components:
         id:
           type: integer
         start:
-          type: date
+          type: object
         end:
-          type: date
+          type: object
         hours:
           type: integer
     schedule-list:
@@ -269,9 +266,18 @@ components:
       type: object
       properties:
         start:
-          type: date
+          type: object
         hours: 
           type: number
+        userId:
+          type: number
+    schedule-update:
+      type: object
+      properties:
+        start:
+          type: object
+        hours:
+          type: object
         userId:
           type: number
 

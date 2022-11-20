@@ -10,7 +10,7 @@ const Schedule = db.schedule;
  * @param {Object} options
  * @param {number} options.userId
  * @param {boolean} [options.raw]
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const findById = async ({ userId, raw = false }) => {
   const user = await User.findByPk(userId, { raw });
@@ -23,7 +23,7 @@ const findById = async ({ userId, raw = false }) => {
  * @param {Object} options
  * @param {number} options.username
  * @param {boolean} [options.raw]
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const findByUsername = async ({ username, raw = false }) => {
   const user = await User.findOne({
@@ -36,6 +36,13 @@ const findByUsername = async ({ username, raw = false }) => {
   return user;
 };
 
+/**
+ *
+ * @param {Object} options
+ * @param {Date} [options.searchFrom]
+ * @param {Date} [options.searchTill]
+ * @returns {Promise<>}
+ */
 const getUsersOrderedByHoursScheduled = async ({ searchFrom, searchTill }) => {
   const queryHelperObject = {};
   // TODO: there is probably a better way of doing this
@@ -64,6 +71,12 @@ const getUsersOrderedByHoursScheduled = async ({ searchFrom, searchTill }) => {
   return users;
 };
 
+/**
+ *
+ * @param {Object} options
+ * @param {number} options.userId
+ * @returns {Promise<>}
+ */
 const getUserRoles = async ({ userId }) => {
   const user = await User.findByPk(userId);
   const roles = await user.getRoles({ raw: true });
@@ -73,11 +86,9 @@ const getUserRoles = async ({ userId }) => {
 /**
  *
  * @param {Object} options
- * @param {Date} options.start
- * @param {Date} options.end
- * @param {number} options.hours
- * @param {number} options.userId
- * @returns {Promise}
+ * @param {string} options.username
+ * @param {string} options.password
+ * @returns {Promise<>}
  */
 const insert = async ({
   username,
@@ -103,7 +114,7 @@ const insert = async ({
  * @param {string} [options.username]
  * @param {string} [options.password]
  * @param {string[]} [options.roles]
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const update = async ({
   userId, username, password, roles
@@ -126,7 +137,7 @@ const update = async ({
  *
  * @param {Object} options
  * @param {number} options.userId
- * @returns {Promise}
+ * @returns {Promise<>}
  */
 const remove = async ({ userId }) => {
   const user = await findById({ userId });
