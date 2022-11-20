@@ -106,6 +106,8 @@ in a real world scenario you would want the repo to catch and normalize the erro
 
 could've extracted more things to constants, like roles, error messages
 
+we need a lot more unit test with mock repos
+
 better spend some time on setting up auto-generation of docs with swagger
 
 should investigate DB persistency when container shuts down, look into volumes
