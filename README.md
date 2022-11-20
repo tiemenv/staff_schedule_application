@@ -114,10 +114,10 @@ For deletion, you can DELETE `/schedules/{scheduleId}`
 
 #### Viewing schedules
 
-Any user can view schedules of any other user, you can so by GET `/users/{userId}/schedules`
+Any user can view schedules of any other user, you can do so by GET `/users/{userId}/schedules`
 
 Alternatively, an admin can request a list of users ordered by amount of scheduled hours: GET `/users`
 
-Both these endpoints accepts optional `searchFrom` and `searchTill` query parameters, which should be timestamps
+Both these endpoints accept optional `searchFrom` and `searchTill` query parameters, which should be timestamps
 
 eg. `/users/1/schedules?searchFrom=1668930775039&searchTill=1669050775039`
