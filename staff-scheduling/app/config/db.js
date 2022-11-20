@@ -1,5 +1,4 @@
 module.exports = {
-  // store these creds safely in .env or a secret manager of some sorts
   HOST: process.env.DB_HOST,
   USER: process.env.DB_USER,
   PASSWORD: process.env.DB_PASSWORD,

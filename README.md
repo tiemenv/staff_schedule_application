@@ -109,3 +109,5 @@ could've extracted more things to constants, like roles, error messages
 better spend some time on setting up auto-generation of docs with swagger
 
 should investigate DB persistency when container shuts down, look into volumes
+
+probably not every error is being gracefully caught and passed along
