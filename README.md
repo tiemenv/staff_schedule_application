@@ -15,7 +15,7 @@ Backend application for a staff scheduling system where you can create staff and
 
 ## Running the application
 
-### Configuriong environment variables
+### Configuring environment variables
 
 Create a `.env` file with the following info:
 
@@ -84,7 +84,7 @@ to
   await user.setRoles([1,2])
 ```
 
-to give new account automatic admin
+in the UserMySqlRepo to give new account automatic admin
 
 After that, you can login by POSTing the same info to `/auth/login`, which will set a JWT for you which will be used in future authentication.
 
