@@ -31,30 +31,25 @@ const Role = db.role;
 /**
  *
  * @param {Object} options
- * @param {boolean} options.reset
+ * @param {boolean} [options.force]
  * @returns {Promise<void>}
  */
-const initializeDb = async ({ reset = false }) => {
-  if (reset === true) {
-    await db.sequelize.sync({ force: true });
-    console.log("drop and resync db");
-    Role.create({
-      id: 1,
-      name: "user",
-    });
-    Role.create({
-      id: 2,
-      name: "admin",
-    });
-  } else {
-    await db.sequelize.sync();
-  }
+const initializeDb = async ({ force = false }) => {
+  await db.sequelize.sync({ force });
+  Role.create({
+    id: 1,
+    name: "user",
+  });
+  Role.create({
+    id: 2,
+    name: "admin",
+  });
 };
 
 ScheduleService.initService(ScheduleMySqlRepo);
 UserService.initService(UserMySqlRepo);
 
-initializeDb({ reset: false });
+initializeDb({ force: false });
 
 // routes
 require("./app/routes/auth")(app);
